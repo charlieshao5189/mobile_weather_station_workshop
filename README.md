@@ -290,6 +290,9 @@ Now we have added the rain sensor which acts as a switch. Here is the modificati
 
 ![image](pics/s4_rain_sensor_object.png) 
 
+All the modification on this step can be found in [this commit](https://github.com/charlieshao5189/mobile_weather_station_workshop/commit/3d1e7a824eaa5bf244b3ad0cd5175fb9f1b95239).
+
+
 ### Step 5- Power optimizing
 Let's do some power optimizing to make this mobile weather station more power efficient.
 
