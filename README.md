@@ -165,6 +165,11 @@ LwM2M  is no specific object for this kind of rain sensor, but since its output 
 Let's do some power optimzigng to make this mobile weather station more power efficient.
 
 #### 1) PPK2 setup
+Before we can start to power optimize the application, we must first be able to meassure the current consumption of the nRF9160 (we will ignore the nRF52840 on the Thingy:91. We don't use the nRF52840 in this workshop other than for getting logs, so we could technically cut the power to it completely). We can use the Power Profiler Kit 2 (PPK2) as an ampere meter to meassure the current, but to be able to do that, we need to modify the Thingy:91 a little bit.
+
+The power to the nRF9160 is routed through header P1. The header is not mounted, so we need to do that ourselves. Note that the header will be too tall for the rubber cap to fit back on to the Thingy. In addition to mounting the header, we also need to cut solder bridge SB3, otherwise the IN and OUT pins on the header will be shorted. See the [Current meassurement chapter](https://infocenter.nordicsemi.com/topic/ug_thingy91/UG/thingy91/hw_description/hw_power_current_measurement.html) of the Thingy:91 HW User Guide for more details.
+
+When the Thingy:91 has been prepared for current meassurement, we can connect the PPK2. Connect the IN pin on the Thingy:91 to the VIN pin on the PPK2, and the OUT pin on the Thingy:91 to the VOUT pin on the PPK2. Then, to see the current consumption, open the Power Profiler application in [nRF Connect for Desktop](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-desktop/Download?lang=en#infotabs), turn on the PPK2, and select the PPK2. Select the "Ampere meter" mode, adjust the sampling parameters to give you the wanted sample rate/duration, start the meassurement by pressing the start button, and enable power output to feed the power to the nRF9160. You should now see a live graph showing the power consumption in real time.
 
 #### 2) Queue Mode
  Queue Mode is a special mode of LwM2M operation in which the client device is not required to actively listen for incoming packets. The client is only required to listen for such packets for a limited period of time after each exchange of messages with the Server - typically after the Update command.
