@@ -9,4 +9,15 @@
 		compatible = "pwm-buzzer";
 		pwms = <&pwm1 0 PWM_HZ(440) PWM_POLARITY_NORMAL>;
 	};
+        buttons {
+
+		button1: button_1 {
+			gpios = <&gpio0 13 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Rain Sensor";
+		};
+	};
+};
+
+&pwm2 {
+	status = "disabled";
 };

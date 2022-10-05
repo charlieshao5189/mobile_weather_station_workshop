@@ -17,11 +17,20 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(MODULE, CONFIG_APP_LOG_LEVEL);
 
+#if defined(CONFIG_APP_ONOFF_SWITCH)
+
 #define SWICTH1_OBJ_INST_ID 0
 #define SWITCH1_APP_NAME "On/Off Switch 1"
 
 #define SWITCH2_OBJ_INST_ID 1
 #define SWITCH2_APP_NAME "On/Off Switch 2"
+
+#elif defined(CONFIG_APP_RAIN_SENSOR)
+
+#define SWICTH1_OBJ_INST_ID 0
+#define SWITCH1_APP_NAME "Rain Sensor"
+
+#endif
 
 static int32_t lwm2m_timestamp[2];
 
@@ -45,6 +54,7 @@ int lwm2m_init_onoff_switch(void)
 			LWM2M_RES_DATA_FLAG_RW);
 	}
 
+        #if !defined(CONFIG_APP_RAIN_SENSOR)
 	/* create switch2 object */
 	lwm2m_engine_create_obj_inst(LWM2M_PATH(IPSO_OBJECT_ONOFF_SWITCH_ID, SWITCH2_OBJ_INST_ID));
 	lwm2m_engine_set_res_buf(
@@ -60,6 +70,7 @@ int lwm2m_init_onoff_switch(void)
 			sizeof(lwm2m_timestamp[SWITCH2_OBJ_INST_ID]),
 			LWM2M_RES_DATA_FLAG_RW);
 	}
+        #endif
 
 	return 0;
 }
@@ -85,6 +96,7 @@ static bool app_event_handler(const struct app_event_header *aeh)
 			}
 			break;
 
+                #if !defined(CONFIG_APP_RAIN_SENSOR)
 		case 2:
 			lwm2m_engine_set_bool(LWM2M_PATH(IPSO_OBJECT_ONOFF_SWITCH_ID,
 							 SWITCH2_OBJ_INST_ID,
@@ -96,6 +108,8 @@ static bool app_event_handler(const struct app_event_header *aeh)
 			}
 			break;
 
+                #endif
+                
 		default:
 			return false;
 		}

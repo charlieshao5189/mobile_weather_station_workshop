@@ -11,6 +11,13 @@ rsource "src/modules/Kconfig"
 rsource "src/lwm2m/Kconfig"
 
 menu "LwM2M objects"
+
+config APP_RAIN_SENSOR
+	bool "Enable rain sensor"
+	select UI_INPUT
+	select LWM2M_IPSO_ONOFF_SWITCH
+	select LWM2M_APP_ONOFF_SWITCH
+
 config APP_PUSH_BUTTON
 	bool "Enable button(s)"
 	select UI_INPUT

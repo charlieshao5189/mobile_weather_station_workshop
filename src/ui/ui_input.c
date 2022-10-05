@@ -52,6 +52,12 @@ static void dk_input_device_event_handler(uint32_t device_states, uint32_t has_c
 		}
 		event->state = (device_states & BIT(dev_num - 1));
 
+		#if defined(CONFIG_APP_RAIN_SENSOR)
+			if(event->device_number==2){
+			    event->type = ON_OFF_SWITCH;
+			    event->device_number=1;
+			}
+		#endif
 		APP_EVENT_SUBMIT(event);
 	}
 }
